@@ -65,6 +65,7 @@ export default function Index({open, handleClose}) {
 	const navigate = useNavigate()
 	const handleSubmit =(e)=>{
 		e.preventDefault();
+		console.log(code);
 		navigate("/")
 	}
   return (
@@ -88,8 +89,8 @@ export default function Index({open, handleClose}) {
               Enter verification code
             </Typography>
             <form onClick={handleSubmit} className='flex flex-col gap-2'>
-						<TextField fullWidth id="fullWidth" onChange={(e)=>setCode(e.target.value)} label="Code" variant="outlined" type="text" required className="my-2" />
-						<Button variant="contained" type="submit" fullWidth>
+						<TextField fullWidth id="fullWidth" onChange={(e)=>setCode(e.target.value)} label="Code" variant="outlined" type="text" required />
+						<Button variant="contained" fullWidth>
 							Verify
 						</Button>
 						</form>
