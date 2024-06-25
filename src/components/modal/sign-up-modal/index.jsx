@@ -7,6 +7,7 @@ import { useSpring, animated } from '@react-spring/web';
 import { cloneElement, forwardRef, useState} from 'react';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {auth} from "@service"
 const Fade = forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -63,10 +64,20 @@ const style = {
 export default function Index({open, handleClose}) {
 	const [code, setCode] = useState("")
 	const navigate = useNavigate()
-	const handleSubmit =(e)=>{
+	const handleSubmit = async (e)=>{
 		e.preventDefault();
-		console.log(code);
-		navigate("/")
+		const payload = {
+			code, 
+			email: localStorage.getItem("email")
+		}
+		try {
+			const response = await auth.verify_code(payload)
+			if (response.status === 201) {
+				navigate("/")
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	}
   return (
     <div>
@@ -90,7 +101,7 @@ export default function Index({open, handleClose}) {
             </Typography>
             <form onClick={handleSubmit} className='flex flex-col gap-2'>
 						<TextField fullWidth id="fullWidth" onChange={(e)=>setCode(e.target.value)} label="Code" variant="outlined" type="text" required />
-						<Button variant="contained" fullWidth>
+						<Button variant="contained" type='submit' fullWidth>
 							Verify
 						</Button>
 						</form>
