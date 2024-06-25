@@ -24,15 +24,16 @@ const Index = () => {
 	}
 	return (
 		<>
+
 			<SignUpModal open={open} handleClose={()=>setOpen(false)}/>
 			<div className="w-full h-screen flex items-center justify-center">
 				<div className="w-full sm:w-[600px] p-5">
 					<h1 className='text-center my-6 text-[50px]'>Register</h1>
-					<form id="submit" onSubmit={handleSubmit}>
-						<TextField fullWidth id="fullWidth" label="Email" variant="outlined" type="email" onChange={handleChange} name="email" required className="my-2" />
-						<TextField fullWidth id="fullWidth" label="Fullname" variant="outlined" type="text" onChange={handleChange} name="full_name" required className="my-2" />
-						<TextField fullWidth id="fullWidth" label="Password" variant="outlined" type="password" onChange={handleChange} name="password" required className="my-2" />
-						<TextField fullWidth id="fullWidth" label="Phone number" variant="outlined" type="text" onChange={handleChange} name="phone_number" required className="my-2" />
+					<form id="submit" onSubmit={handleSubmit} className='flex flex-col gap-2'>
+						<TextField fullWidth id="fullWidth" label="Email" variant="outlined" type="email" onChange={handleChange} name="email" required />
+						<TextField fullWidth id="fullWidth" label="Fullname" variant="outlined" type="text" onChange={handleChange} name="full_name" required />
+						<TextField fullWidth id="fullWidth" label="Password" variant="outlined" type="password" onChange={handleChange} name="password" required />
+						<TextField fullWidth id="fullWidth" label="Phone number" variant="outlined" type="text" onChange={handleChange} name="phone_number" required />
 						<Button variant="contained" disableElevation type="submit" form="submit" fullWidth>
 							SignUp
 						</Button>
