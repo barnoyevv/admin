@@ -72,9 +72,10 @@ export default function Index({open, handleClose}) {
 		}
 		try {
 			const response = await auth.verify_code(payload)
-			if (response.status === 201) {
-				navigate("/")
-			}
+			console.log(response);
+			// if (response.status === 201) {
+			// 	navigate("/")
+			// }
 		} catch (error) {
 			console.log(error);
 		}
