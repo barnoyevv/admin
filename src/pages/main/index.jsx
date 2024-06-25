@@ -1,10 +1,9 @@
 import "./index.css"
-import ResponsiveDrawer from "../../components/layout/layout"
 
 const Index = () => {
 	return (
 		<div>
-			<ResponsiveDrawer/>
+			<h1>main</h1>
 		</div>
 	)
 }

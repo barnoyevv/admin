@@ -1,61 +1,40 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import TextField from '@mui/material/TextField';
+import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
-import CustomizedSnackbars from "../../components/notification/notification";
-
+import React, { useState } from 'react'
+import { auth } from "@service"
+import { SignUpModal } from '@modal';
 const Index = () => {
 	const [form, setForm] = useState({})
-	const navigate = useNavigate();
-	const [open, setOpen] = useState(false);
-	const [type, setType] = useState(" ")
-
 	const handleChange = (e) => {
 		const { value, name } = e.target
 		setForm({ ...form, [name]: value })
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const { username, password } = form
-		if (username === "admin" && password === "123") {
-			setOpen(true)
-			setType("success")
-			setTimeout(() => {
-				navigate("/main")
-			}, 1500)
-		} else {
-			setOpen(true)
-			setType("error")
+		try {
+			const response = await auth.sign_in(form)
+			if (response.status === 200) {
+				localStorage.setItem("access_token", response?.data?.access_token)
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	}
-	const moveRegister = () => {
-		navigate("/sign-up")
-	}
 	return (
-		<div className="login-page">
-			<CustomizedSnackbars open={open} setOpen={setOpen} type={type} />
-			<div className="row">
-				<div className="col-md-6 offset-3 my-3">
-				<div className="card">
-				<form id="submit" onSubmit={handleSubmit}>
-					<div className="card-header">
-						<h1 className="text-center">Login</h1>
-					</div>
-					<div className="card-body">
-						<TextField fullWidth id="fullWidth" label="Username" variant="outlined" type="text" onChange={handleChange} name="username" required className="my-2"/>
-						<TextField fullWidth id="fullWidth" label="Password" variant="outlined" type="password" onChange={handleChange} name="password" required className="my-2"/>
-					</div>
-					<p onClick={moveRegister} className="text-decoration-underline text-primary mx-3">Register</p>
-					<div className="card-footer">
-						<Button variant="contained" disableElevation type="submit" form="submit">
-							Log in
+		<>
+			<div className="w-full h-screen flex items-center justify-center">
+				<div className="w-full sm:w-[600px] p-5">
+					<h1 className='text-center my-6 text-[50px]'>Login</h1>
+					<form id="submit" onSubmit={handleSubmit}>
+						<TextField fullWidth id="fullWidth" label="Email" variant="outlined" type="email" onChange={handleChange} name="email" required className="my-2" />
+						<TextField fullWidth id="fullWidth" label="Password" variant="outlined" type="password" onChange={handleChange} name="password" required className="my-2" />
+						<Button variant="contained" disableElevation type="submit" form="submit" fullWidth>
+							SignIn
 						</Button>
-					</div>
-				</form>
-			</div>
+					</form>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 
