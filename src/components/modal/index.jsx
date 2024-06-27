@@ -1,3 +1,3 @@
 import SignUpModal from "./sign-up-modal"
-
-export {SignUpModal}
+import ForgotPasswordModal from "./forget-password-modal"
+export {SignUpModal, ForgotPasswordModal}
