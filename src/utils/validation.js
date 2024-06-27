@@ -27,3 +27,7 @@ export const ValidationSignIn = Yup.object().shape({
 		.matches(/[@$!%*?&:#]/, 'Password must contain at least one special character')
 		.required('Required'),
 })
+
+export const ValidationForgotPassword = Yup.object().shape({
+	email: Yup.string().email('Invalid email').required('Required'),
+})

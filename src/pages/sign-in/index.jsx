@@ -12,6 +12,9 @@ const Index = () => {
 	const moveRegister = () => {
 		navigate("/sign-up");
 	};
+	const moveForgotPassword = () =>{
+		navigate("/forgot-password")
+	}
 
 	const handleSubmit = async (values, { setSubmitting }) => {
 		try {
@@ -61,7 +64,10 @@ const Index = () => {
                   name="password"
                 />
 								<ErrorMessage name="password" component="div" className="text-red-600" />
+								<div className='flex align-center justify-between'>
 								<p className="cursor-pointer text-blue-600" onClick={moveRegister}>Register?</p>
+								<p className="cursor-pointer text-blue-600" onClick={moveForgotPassword}>Forgot Password?</p>
+								</div>
 								<Button
 									variant="contained"
 									disableElevation
