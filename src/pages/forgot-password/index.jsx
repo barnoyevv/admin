@@ -1,20 +1,19 @@
 import { TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { auth } from "@service";
-import { useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { ValidationForgotPassword } from "@validation";
 import {ForgotPasswordModal} from "@modal"
 
 const Index = () => {
 	const [open, setOpen] = useState(false);
-
+	const [email,setEmail] = useState("")
   const handleSubmit = async (values, { setSubmitting }) => {
+		setEmail(values.email)
     try {
       const response = await auth.forgot_password(values);
       if (response.status === 200) {
         setOpen(true);
-        localStorage.setItem("email", values.email);
       }
     } catch (error) {
       console.log(error);
@@ -25,7 +24,7 @@ const Index = () => {
 
 	return (
 		<>
-		<ForgotPasswordModal open={open} handleClose={() => setOpen(false)} />
+		<ForgotPasswordModal open={open} handleClose={() => setOpen(false)}  email={email}/>
 		<div className="w-full h-screen flex items-center justify-center">
 			<div className="w-full sm:w-[600px] p-5">
 				<h1 className='text-center my-6 text-[50px]'>Enter email...</h1>

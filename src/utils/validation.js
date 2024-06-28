@@ -31,3 +31,7 @@ export const ValidationSignIn = Yup.object().shape({
 export const ValidationForgotPassword = Yup.object().shape({
 	email: Yup.string().email('Invalid email').required('Required'),
 })
+
+export const updatePassValidationSchema = Yup.object().shape({
+	code: Yup.string().required().trim()
+});
