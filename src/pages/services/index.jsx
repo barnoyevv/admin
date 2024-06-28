@@ -1,10 +1,9 @@
-import ResponsiveDrawer from "../../components/ui"
-
+import React from 'react'
 
 const Index = () => {
 	return (
 		<div>
-			<ResponsiveDrawer/>
+			<h1>Services</h1>
 		</div>
 	)
 }

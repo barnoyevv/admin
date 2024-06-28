@@ -24,6 +24,9 @@ const Index = () => {
 			if (response.status === 200) {
 				localStorage.setItem("access_token", response?.data?.access_token);
 				Notification({title: "Success", type: 'success'})
+				setTimeout(() => {
+          navigate("/main");
+        }, 2500);
 			}
 		} catch (error) {
 			console.log(error);

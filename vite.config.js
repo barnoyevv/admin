@@ -12,6 +12,7 @@ export default defineConfig({
 			{find: "@service", replacement: "/src/service/index.js"},
 			{find: "@validation", replacement: "/src/utils/validation.js"},
 			{find: "@notification", replacement: "/src/utils/notification.js"},
+			{find: "@routes", replacement: "/src/router/routes.jsx"},
 		]
 	}
 })
