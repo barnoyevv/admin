@@ -4,6 +4,8 @@ import { auth } from "@service";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { ValidationSignIn } from "@validation";
+import { ToastContainer } from 'react-toastify';
+import Notification from '@notification';
 
 const Index = () => {
 	// const [open, setOpen] = useState(false);
@@ -21,9 +23,11 @@ const Index = () => {
 			const response = await auth.sign_in(values);
 			if (response.status === 200) {
 				localStorage.setItem("access_token", response?.data?.access_token);
+				Notification({title: "Success", type: 'success'})
 			}
 		} catch (error) {
 			console.log(error);
+			Notification({title: "Error", type: 'error'})
 		} finally {
 			setSubmitting(false);
 		}
@@ -31,6 +35,7 @@ const Index = () => {
 
 	return (
 		<>
+		<ToastContainer/>
 			<div className="w-full h-screen flex items-center justify-center">
 				<div className="w-full sm:w-[600px] p-5">
 					<h1 className='text-center my-6 text-[50px]'>Login</h1>

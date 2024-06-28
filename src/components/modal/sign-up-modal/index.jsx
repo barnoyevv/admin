@@ -4,10 +4,13 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
-import { cloneElement, forwardRef, useState} from 'react';
+import { cloneElement, forwardRef, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import {auth} from "@service"
+import { auth } from '@service';
+import { ToastContainer } from 'react-toastify';
+import Notification from '@notification';
+
 const Fade = forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -49,7 +52,7 @@ Fade.propTypes = {
   ownerState: PropTypes.any,
 };
 
-const style = {
+const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -61,54 +64,71 @@ const style = {
   p: 4,
 };
 
-export default function Index({open, handleClose}) {
-	const [code, setCode] = useState("")
-	const navigate = useNavigate()
-	const handleSubmit = async (e)=>{
-		e.preventDefault();
-		const payload = {
-			code, 
-			email: localStorage.getItem("email")
-		}
-		try {
-			const response = await auth.verify_code(payload)
-			console.log(response);
-			if (response.status === 201) {
-				navigate("/")
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}
+export default function Index({ open, handleClose }) {
+  const [code, setCode] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      code,
+      email: localStorage.getItem("email")
+    };
+    try {
+      const response = await auth.verify_code(payload);
+      console.log(response);
+      if (response.status === 201) {
+        Notification({ title: "Verified", type: 'success' });
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      }
+    } catch (error) {
+      Notification({ title: "Error", type: 'error' });
+      console.log(error);
+    }
+  };
+
   return (
-    <div>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            TransitionComponent: Fade,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h5" sx={{marginY: "10px", textAlign: "center"}} component="h2">
-              Enter verification code
-            </Typography>
-            <form onClick={handleSubmit} className='flex flex-col gap-2'>
-						<TextField fullWidth id="fullWidth" onChange={(e)=>setCode(e.target.value)} label="Code" variant="outlined" type="text" required />
-						<Button variant="contained" type='submit' fullWidth>
-							Verify
-						</Button>
-						</form>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
+    <>
+      <ToastContainer />
+      <div>
+        <Modal
+          aria-labelledby="spring-modal-title"
+          aria-describedby="spring-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          slots={{ backdrop: Backdrop }}
+          slotProps={{
+            backdrop: {
+              TransitionComponent: Fade,
+            },
+          }}
+        >
+          <Fade in={open}>
+            <Box sx={modalStyle}>
+              <Typography id="spring-modal-title" variant="h5" sx={{ marginY: "10px", textAlign: "center" }} component="h2">
+                Enter verification code
+              </Typography>
+              <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  onChange={(e) => setCode(e.target.value)}
+                  label="Code"
+                  variant="outlined"
+                  type="text"
+                  required
+                />
+                <Button variant="contained" type='submit' fullWidth>
+                  Verify
+                </Button>
+              </form>
+            </Box>
+          </Fade>
+        </Modal>
+      </div>
+    </>
   );
 }

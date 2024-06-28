@@ -11,9 +11,7 @@ export const ValidationSignUp = Yup.object().shape({
 		.matches(/\d/, 'Password must contain at least one number')
 		.matches(/[@$!%*?&:#]/, 'Password must contain at least one special character')
 		.required('Required'),
-	phone_number: Yup.string()
-		.matches(/^\+998\d{9}$/, 'Phone number must start with +998 and be followed by 9 digits')
-		.required('Required'),
+	phone_number: Yup.string().min(19, "Invalid phone number").required('Phone is required')
 });
 
 export const ValidationSignIn = Yup.object().shape({

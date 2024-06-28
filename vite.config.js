@@ -11,6 +11,7 @@ export default defineConfig({
 			{find: "@modal", replacement: "/src/components/modal/index.jsx"},
 			{find: "@service", replacement: "/src/service/index.js"},
 			{find: "@validation", replacement: "/src/utils/validation.js"},
+			{find: "@notification", replacement: "/src/utils/notification.js"},
 		]
 	}
 })
