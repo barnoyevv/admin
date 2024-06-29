@@ -1,14 +1,15 @@
-import { TextField, Button } from '@mui/material';
-import React from 'react';
+import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
+import React, { useState } from 'react';
 import { auth } from "@service";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { ValidationSignIn } from "@validation";
 import { ToastContainer } from 'react-toastify';
 import Notification from '@notification';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Index = () => {
-	// const [open, setOpen] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
 
 	const moveRegister = () => {
@@ -65,11 +66,23 @@ const Index = () => {
 								<Field
                   as={TextField}
                   fullWidth
+									type={showPassword ? "text" : "password"}
                   id="password"
                   label="Password"
                   variant="outlined"
-                  type="password"
                   name="password"
+									InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword(!showPassword)}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
 								<ErrorMessage name="password" component="div" className="text-red-600" />
 								<div className='flex align-center justify-between'>

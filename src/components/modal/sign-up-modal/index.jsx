@@ -81,7 +81,7 @@ export default function Index({ open, handleClose }) {
         Notification({ title: "Verified", type: 'success' });
         setTimeout(() => {
           navigate("/");
-        }, 3000);
+        }, 2500);
       }
     } catch (error) {
       Notification({ title: "Error", type: 'error' });
